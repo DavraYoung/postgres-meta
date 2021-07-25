@@ -2,6 +2,17 @@
 
 A RESTful API for managing your Postgres. Fetch tables, add roles, and run queries (and more).
 
+### Environment variables
+```shell
+PG_META_DB_HOST = ${PG_META_DB_HOST}
+PG_META_DB_NAME = ${PG_META_DB_NAME}
+PG_META_DB_USER = ${PG_META_DB_USER}
+PG_META_DB_PASSWORD = ${PG_META_DB_PASSWORD}
+PG_META_DB_PORT = ${PG_META_DB_PORT}
+PG_META_PORT = ${PG_META_PORT}
+```
+
+
 ## Documentation
 
 https://supabase.github.io/postgres-meta/

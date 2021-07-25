@@ -91,7 +91,8 @@ export default class PostgresMetaColumns {
     is_unique = false,
     comment,
     check,
-  }: {
+    foreign_table,
+    }: {
     table_id: number
     name: string
     type: string
@@ -103,6 +104,7 @@ export default class PostgresMetaColumns {
     is_primary_key?: boolean
     is_unique?: boolean
     comment?: string
+    foreign_table?: string
     check?: string
   }): Promise<PostgresMetaResult<PostgresColumn>> {
     const { data, error } = await this.metaTables.retrieve({ id: table_id })
@@ -126,6 +128,7 @@ export default class PostgresMetaColumns {
     }
     const isPrimaryKeyClause = is_primary_key ? 'PRIMARY KEY' : ''
     const isUniqueClause = is_unique ? 'UNIQUE' : ''
+    const foreignClause = foreign_table ? `references ${ident(foreign_table)}` : '';
     const checkSql = check === undefined ? '' : `CHECK (${check})`
     const commentSql =
       comment === undefined
@@ -140,7 +143,8 @@ BEGIN;
     ${isNullableClause}
     ${isPrimaryKeyClause}
     ${isUniqueClause}
-    ${checkSql};
+    ${checkSql}
+    ${foreignClause};
   ${commentSql};
 COMMIT;`
     {
